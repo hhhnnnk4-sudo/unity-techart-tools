@@ -27,8 +27,34 @@ Packages/com.hhhnnnk4.techarttools/
 | Read/Write 开启 | Warning | 关闭 Read/Write |
 | 法线贴图且 sRGB 开启 | Error | 关闭 sRGB |
 | 非法线、非 Sprite、无 Mipmap | Warning | 开启 Mipmap |
+| 基础平台未压缩（≥512px） | Warning | 设为 Compressed |
 | 移动端平台未压缩 | Warning | 按配置应用压缩格式（默认 Android ASTC 6x6） |
 | 非二次幂 | Info | 无（提示） |
+
+## 报告导出
+
+审计窗口工具栏的 **Export** 按钮可将当前结果导出为：
+
+- **Markdown（.md）**：含汇总信息与问题表格，适合提交到美术/QA 流程
+- **JSON（.json）**：结构化数据，便于 CI 或脚本继续处理
+
+导出的 JSON 结构（`TechArtReportRoot`）：
+
+```json
+{
+  "generated": "2026-08-12 12:00:00",
+  "items": [
+    {
+      "category": "Texture",
+      "severity": "Warning",
+      "title": "...",
+      "message": "...",
+      "assetPath": "Assets/...",
+      "fixable": true
+    }
+  ]
+}
+```
 
 ### Mesh（网格）
 

@@ -57,6 +57,7 @@ namespace Hhnnnk4.TechArtTools.Editor
             if (GUILayout.Button("Audit", EditorStyles.toolbarButton)) RunAudit();
             if (GUILayout.Button("Fix All", EditorStyles.toolbarButton)) FixAll();
             if (GUILayout.Button("Clear", EditorStyles.toolbarButton)) Clear();
+            if (GUILayout.Button("Export", EditorStyles.toolbarButton)) ShowExportMenu();
 
             GUILayout.FlexibleSpace();
 
@@ -246,6 +247,55 @@ namespace Hhnnnk4.TechArtTools.Editor
             _status = string.Empty;
             RefreshCounts();
             Repaint();
+        }
+
+        private void ShowExportMenu()
+        {
+            if (_issues.Count == 0)
+            {
+                EditorUtility.DisplayDialog("TechArt Export", "Nothing to export. Run an audit first.", "OK");
+                return;
+            }
+
+            var menu = new GenericMenu();
+            menu.AddItem(new GUIContent("Export as Markdown (.md)"), false, () => ExportReport(false));
+            menu.AddItem(new GUIContent("Export as JSON (.json)"), false, () => ExportReport(true));
+            menu.ShowAsContext();
+        }
+
+        private void ExportReport(bool asJson)
+        {
+            var defaultName = $"techart-audit-report-{DateTime.Now:yyyyMMdd-HHmmss}.{(asJson ? "json" : "md")}";
+            var path = EditorUtility.SaveFilePanel(
+                asJson ? "Export TechArt Audit Report (JSON)" : "Export TechArt Audit Report (Markdown)",
+                "Assets",
+                defaultName,
+                asJson ? "json" : "md");
+            if (string.IsNullOrEmpty(path)) return;
+
+            try
+            {
+                if (asJson)
+                {
+                    TechArtReportExporter.ExportJson(_issues, path);
+                }
+                else
+                {
+                    TechArtReportExporter.ExportMarkdown(_issues, path);
+                }
+
+                if (path.StartsWith(Application.dataPath, StringComparison.Ordinal))
+                {
+                    AssetDatabase.Refresh();
+                }
+
+                EditorUtility.RevealInFinder(path);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                EditorUtility.DisplayDialog("TechArt Export", "Export failed:\n" + e.Message, "OK");
+            }
         }
 
         private void RefreshCounts()

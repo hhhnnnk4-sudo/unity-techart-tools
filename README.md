@@ -2,6 +2,11 @@
 
 > A collection of technical-art oriented editor tools for Unity.
 
+![Unity](https://img.shields.io/badge/Unity-2021.3%20LTS%2B-black?logo=unity&logoColor=white)
+![Release](https://img.shields.io/github/v/release/hhhnnnk4-sudo/unity-techart-tools)
+![License](https://img.shields.io/github/license/hhhnnnk4-sudo/unity-techart-tools)
+![CI](https://github.com/hhhnnnk4-sudo/unity-techart-tools/actions/workflows/ci.yml/badge.svg)
+
 **TechArt Tools** is an editor-only Unity package (UPM) that helps technical artists and art teams **audit assets, apply one-click fixes, and analyze memory & import settings**. Open a window, scan, spot the problem, click to fix.
 
 - **Zero runtime cost** — editor-only, no code in your builds
@@ -19,12 +24,12 @@ Audits your selection, your whole project, or the currently open scenes and repo
 
 | Category | Checks |
 | --- | --- |
-| **Texture** | Oversized textures, Read/Write enabled, sRGB normal maps, missing mipmaps, uncompressed mobile formats, non-power-of-two |
+| **Texture** | Oversized textures, Read/Write enabled, sRGB normal maps, missing mipmaps, uncompressed base/mobile formats, non-power-of-two |
 | **Mesh** | Read/Write enabled (CPU-resident copy), high vertex / triangle count alerts |
 | **Material** | Missing shader, too many keywords (variant bloat), **stale shader keywords**, unassigned texture properties |
 | **Scene** | Missing scripts, too many realtime lights, high renderer counts |
 
-Every issue can be fixed with a **one-click Fix**, or batch-applied with **Fix All**.
+Every issue can be fixed with a **one-click Fix**, or batch-applied with **Fix All**. Reports can be **exported as Markdown or JSON** (button in the toolbar) for sharing or archiving in your pipeline.
 
 ### 2. Inspector
 `Tools > TechArt Tools > Inspector`
@@ -112,12 +117,13 @@ The repository ships GitHub Actions:
 
 ## Roadmap
 
+- [x] Audit report export (Markdown / JSON)
+- [x] Base & mobile compression rules
 - [ ] OpenUPM publication & badges
-- [ ] More fix rules (texture compression quality, atlas packing suggestions, etc.)
+- [ ] More fix rules (atlas packing suggestions, etc.)
 - [ ] Dependency analysis / unused-asset cleanup
-- [ ] One-click audit report export (JSON / Markdown)
 
-Issues and PRs are welcome.
+Issues and PRs are welcome. See [CONTRIBUTING](CONTRIBUTING.md).
 
 ---
 

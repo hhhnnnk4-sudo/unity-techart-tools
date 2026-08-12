@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -69,6 +70,72 @@ namespace Hhnnnk4.TechArtTools.Tests
                 Assert.IsTrue(issue.IsFixable);
                 Assert.AreEqual("Smoke", issue.Title);
                 UnityEngine.Object.DestroyImmediate(texture);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(config);
+            }
+        }
+
+        [Test]
+        public void ExportMarkdownWritesReportFile()
+        {
+            var issues = new List<TechArtIssue>
+            {
+                new TechArtIssue(TechArtIssueCategory.Material, TechArtIssueSeverity.Warning, "Stale keywords", "Some message"),
+                new TechArtIssue(TechArtIssueCategory.Texture, TechArtIssueSeverity.Error, "sRGB normal", "Another message")
+            };
+
+            var path = Path.Combine(Path.GetTempPath(), "techart_report_test.md");
+            try
+            {
+                TechArtReportExporter.ExportMarkdown(issues, path);
+                Assert.IsTrue(File.Exists(path));
+                var content = File.ReadAllText(path);
+                Assert.IsTrue(content.Contains("Stale keywords"));
+                Assert.IsTrue(content.Contains("| Warning | Material |"));
+                Assert.IsTrue(content.Contains("sRGB normal"));
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        [Test]
+        public void ExportJsonProducesValidStructure()
+        {
+            var issues = new List<TechArtIssue>
+            {
+                new TechArtIssue(TechArtIssueCategory.Mesh, TechArtIssueSeverity.Info, "High vertex count", "100k vertices")
+            };
+
+            var path = Path.Combine(Path.GetTempPath(), "techart_report_test.json");
+            try
+            {
+                TechArtReportExporter.ExportJson(issues, path);
+                Assert.IsTrue(File.Exists(path));
+
+                var root = JsonUtility.FromJson<TechArtReportRoot>(File.ReadAllText(path));
+                Assert.IsNotNull(root);
+                Assert.AreEqual(1, root.items.Count);
+                Assert.AreEqual("Mesh", root.items[0].category);
+                Assert.AreEqual("Info", root.items[0].severity);
+                Assert.AreEqual("High vertex count", root.items[0].title);
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        [Test]
+        public void ConfigHasBaseCompressionToggle()
+        {
+            var config = ScriptableObject.CreateInstance<TechArtAuditConfig>();
+            try
+            {
+                Assert.IsTrue(config.CheckBaseCompression);
             }
             finally
             {

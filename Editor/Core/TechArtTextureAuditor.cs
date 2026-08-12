@@ -77,6 +77,23 @@ namespace Hhnnnk4.TechArtTools.Editor
                     }));
             }
 
+            if (config.CheckBaseCompression &&
+                importer.maxTextureSize >= 512 &&
+                importer.textureCompression == TextureImporterCompression.Uncompressed)
+            {
+                issues.Add(new TechArtIssue(
+                    TechArtIssueCategory.Texture,
+                    TechArtIssueSeverity.Warning,
+                    "Base platform texture is uncompressed",
+                    $"'{name}' is imported uncompressed on the base platform. Compress to save memory and bandwidth.",
+                    asset,
+                    () =>
+                    {
+                        importer.textureCompression = TextureImporterCompression.Compressed;
+                        importer.SaveAndReimport();
+                    }));
+            }
+
             if (config.CheckMobileCompression)
             {
                 var platform = GetPlatformString(config.MobilePlatform);

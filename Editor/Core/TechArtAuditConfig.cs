@@ -28,6 +28,8 @@ namespace Hhnnnk4.TechArtTools.Editor
         public TechArtMobilePlatform MobilePlatform = TechArtMobilePlatform.Android;
         [Tooltip("Compression format applied by the one-click fix on the configured mobile platform.")]
         public TextureImporterFormat MobileCompressionFormat = TextureImporterFormat.ASTC_6x6;
+        [Tooltip("Warn when large textures are imported uncompressed on the base platform.")]
+        public bool CheckBaseCompression = true;
         public bool CheckNonPowerOfTwo = true;
 
         [Header("Mesh")]

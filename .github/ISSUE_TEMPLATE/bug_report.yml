@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a bug or an incorrect audit finding
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Fill in as much as you can.
+  - type: input
+    id: unity
+    attributes:
+      label: Unity version
+      placeholder: e.g. 2021.3.45f1
+    validations:
+      required: true
+  - type: dropdown
+    id: pipeline
+    attributes:
+      label: Render pipeline
+      options:
+        - URP
+        - HDRP
+        - Built-in
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Steps to reproduce, expected vs actual behavior.
+      placeholder: |
+        1. Open TechArt Audit Window
+        2. Select an asset / run audit
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console errors (if any)
+      placeholder: Paste relevant log lines

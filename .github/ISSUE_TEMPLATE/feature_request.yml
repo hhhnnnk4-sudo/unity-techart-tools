@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest a new audit rule, fix or tool
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tell us what would make TechArt Tools more useful for your pipeline.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / use case
+      description: What pain point does this solve for technical artists?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed behavior
+      description: What should the tool check or do? Should it be one-click fixable?
+  - type: input
+    id: pipeline
+    attributes:
+      label: Target render pipeline
+      placeholder: URP / HDRP / Built-in / All
