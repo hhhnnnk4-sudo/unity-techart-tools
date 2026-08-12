@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate-package:
+    name: Validate package metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate package.json
+        run: |
+          python3 - <<'EOF'
+          import json
+          with open("package.json", encoding="utf-8") as f:
+              p = json.load(f)
+          assert p["name"] == "com.hhhnnnk4.techarttools", f"unexpected name: {p['name']}"
+          assert p["version"], "missing version"
+          assert p.get("unity"), "missing unity version"
+          assert p["type"] == "tool", "type must be tool"
+          assert p["author"].get("url"), "missing author url"
+          print("package.json OK:", p["name"], p["version"])
+          EOF
+
+      - name: Validate asmdefs are JSON
+        run: |
+          python3 - <<'EOF'
+          import json, glob
+          for path in glob.glob("**/*.asmdef", recursive=True):
+              json.load(open(path, encoding="utf-8"))
+              print("asmdef OK:", path)
+          EOF
+
+  unity-tests:
+    name: Unity EditMode tests
+    runs-on: ubuntu-latest
+    if: ${{ secrets.UNITY_LICENSE != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Prepare test harness project
+        run: |
+          set -eux
+          mkdir -p .ci/Assets/Editor .ci/Packages .ci/ProjectSettings
+          cp Tests~/Editor/TechArtToolsSmokeTests.cs .ci/Assets/Editor/
+          cp .ci/ProjectVersion.txt .ci/ProjectSettings/ProjectVersion.txt
+          cp .ci/EditorBuildSettings.asset .ci/ProjectSettings/EditorBuildSettings.asset
+          cat > .ci/Packages/manifest.json <<'EOF'
+          {
+            "dependencies": {
+              "com.hhhnnnk4.techarttools": "file:../"
+            }
+          }
+          EOF
+
+      - uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: .ci
+          unityVersion: 2021.3.45f1
+          testMode: editmode
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: Unity EditMode tests

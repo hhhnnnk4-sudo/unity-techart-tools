@@ -1,0 +1,14 @@
+{
+  "name": "TechArtTools.Runtime",
+  "rootNamespace": "Hhnnnk4.TechArtTools",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

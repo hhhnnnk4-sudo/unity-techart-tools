@@ -1,0 +1,44 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+[Aa]nalytics/
+
+# .NET / Visual Studio
+[Bb]in/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+x64/
+x86/
+.vs/
+*.suo
+*.user
+*.userprefs
+*.csproj
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.pidb
+*.booproj
+*.svd
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.racoon
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# CI harness (generated only inside GitHub Actions)
+.ci/TestProject/

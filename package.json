@@ -1,0 +1,28 @@
+{
+  "name": "com.hhhnnnk4.techarttools",
+  "version": "0.1.0",
+  "displayName": "TechArt Tools",
+  "description": "A collection of technical-art oriented editor tools for Unity: asset audit (texture / mesh / material / scene), one-click fixes, batch utilities and a selection inspector. URP friendly, zero runtime dependencies.",
+  "unity": "2021.3",
+  "unityRelease": "0f1",
+  "documentationUrl": "https://github.com/hhhnnnk4-sudo/unity-techart-tools",
+  "changelogUrl": "https://github.com/hhhnnnk4-sudo/unity-techart-tools/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/hhhnnnk4-sudo/unity-techart-tools/blob/main/LICENSE",
+  "keywords": [
+    "techart",
+    "technical-art",
+    "editor",
+    "tools",
+    "audit",
+    "texture",
+    "mesh",
+    "material",
+    "optimization",
+    "urp"
+  ],
+  "author": {
+    "name": "hhhnnnk4",
+    "url": "https://github.com/hhhnnnk4-sudo"
+  },
+  "type": "tool"
+}
