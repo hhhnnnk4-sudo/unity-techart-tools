@@ -1,139 +1,126 @@
 # TechArt Tools
 
 > A collection of technical-art oriented editor tools for Unity.
-> 面向 Unity 技术美术（TA）的编辑器工具集。
 
-**TechArt Tools** 是一套纯编辑器工具包（UPM Package），帮你做**资源体检、批量修复、内存与导入设置分析**。它是为技术美术和美术团队设计的：打开窗口、一键扫描、看到问题、点一下就修。
+**TechArt Tools** is an editor-only Unity package (UPM) that helps technical artists and art teams **audit assets, apply one-click fixes, and analyze memory & import settings**. Open a window, scan, spot the problem, click to fix.
 
-- 无需运行时代码，**零运行时开销**
-- 兼容 URP / HDRP / Built-in（本包不依赖任何渲染管线）
-- Unity **2021.3 LTS** 及以上
-
-> English summary below.
+- **Zero runtime cost** — editor-only, no code in your builds
+- **Pipeline-agnostic** — works with URP, HDRP and Built-in (no render pipeline dependency)
+- Requires Unity **2021.3 LTS** or newer
 
 ---
 
-## Features 功能
+## Features
 
-### 1. Audit Window 资产审计窗口
+### 1. Audit Window
 `Tools > TechArt Tools > Audit Window`
 
-对选中资源、整个项目或当前打开的场景进行审计，并列出问题清单：
+Audits your selection, your whole project, or the currently open scenes and reports issues:
 
-| 类别 | 检查项 |
+| Category | Checks |
 | --- | --- |
-| **Texture** | 尺寸超限、Read/Write 开启、法线贴图误开 sRGB、缺少 Mipmap、移动端未压缩、非二次幂贴图 |
-| **Mesh** | Read/Write 开启（CPU 常驻内存）、高顶点数 / 高三角形数提醒 |
-| **Material** | Shader 缺失、关键字过多（变体膨胀）、**失效的 shader keywords**、未赋值的贴图属性 |
-| **Scene** | 丢失的脚本（Missing Script）、Realtime 灯光过多、Renderer 数量过高 |
+| **Texture** | Oversized textures, Read/Write enabled, sRGB normal maps, missing mipmaps, uncompressed mobile formats, non-power-of-two |
+| **Mesh** | Read/Write enabled (CPU-resident copy), high vertex / triangle count alerts |
+| **Material** | Missing shader, too many keywords (variant bloat), **stale shader keywords**, unassigned texture properties |
+| **Scene** | Missing scripts, too many realtime lights, high renderer counts |
 
-每个问题都可以 **一键 Fix**，也可以 **Fix All** 批量修复。
+Every issue can be fixed with a **one-click Fix**, or batch-applied with **Fix All**.
 
-### 2. Inspector 资源信息面板
+### 2. Inspector
 `Tools > TechArt Tools > Inspector`
 
-跟随 Project 窗口的选择，显示网格 / 贴图 / 材质的：
-- 顶点数、三角形数、索引格式、包围盒、**运行时内存**
-- 贴图导入设置（尺寸、Mipmap、Read/Write、sRGB、压缩格式）
-- 材质关键字数量、**失效关键字警告**
+A statistics panel that follows the Project window selection, showing for meshes / textures / materials:
 
-### 3. Batch Tools 批量工具
+- Vertex count, triangle count, index format, bounds and **runtime memory**
+- Texture import settings (size, mipmaps, Read/Write, sRGB, compression)
+- Material keyword count and **stale keyword warnings**
+
+### 3. Batch Tools
 `Tools > TechArt Tools > Batch`
 
-| 菜单 | 作用 |
+| Menu item | Action |
 | --- | --- |
-| Textures / Disable Read-Write | 批量关闭贴图 Read/Write |
-| Textures / Enable Mipmaps | 批量开启 Mipmap |
-| Textures / Cap Max Size to 2048 | 批量限制最大尺寸为 2048 |
-| Textures / Set Android ASTC 6x6 | 批量设置 Android 平台 ASTC 6x6 压缩 |
-| Meshes / Disable Read-Write | 批量关闭网格 Read/Write |
-| Materials / Clear Stale Keywords | 批量清理失效的 shader keywords |
+| Textures / Disable Read-Write | Bulk-disable Read/Write on textures |
+| Textures / Enable Mipmaps | Bulk-enable mipmaps |
+| Textures / Cap Max Size to 2048 | Bulk-cap maximum texture size at 2048 |
+| Textures / Set Android ASTC 6x6 | Bulk-set Android ASTC 6x6 compression |
+| Meshes / Disable Read-Write | Bulk-disable Read/Write on meshes |
+| Materials / Clear Stale Keywords | Bulk-remove stale shader keywords |
 
-所有批量操作都有进度条，可随时取消。
+All batch operations show a progress bar and can be cancelled at any time.
 
 ---
 
-## Installation 安装
+## Installation
 
-### 方式一：通过 Unity Package Manager（推荐）
+### Option 1 — Unity Package Manager (recommended)
 
-1. 打开 `Window > Package Manager`
-2. 点击左上角 **+** → **Add package from git URL**
-3. 粘贴：
+1. Open `Window > Package Manager`
+2. Click **+** in the top-left → **Add package from git URL**
+3. Paste:
 
 ```
 https://github.com/hhhnnnk4-sudo/unity-techart-tools.git
 ```
 
-### 方式二：OpenUPM（待发布）
+### Option 2 — OpenUPM (pending publication)
 
 ```bash
 openupm add com.hhhnnnk4.techarttools
 ```
 
-### 方式三：手动
+### Option 3 — Manual
 
-把整个仓库复制到项目的 `Packages/` 目录下（例如 `Packages/unity-techart-tools/`）。
-
----
-
-## Usage 使用
-
-1. 打开 `Tools > TechArt Tools > Audit Window`
-2. 选择审计范围：`Selection`（Project 窗口中选中的资源）/ `Assets`（整个项目）/ `OpenScenes`（当前打开的场景）
-3. 点击 **Audit**
-4. 查看问题，点击 **Fix** 单修或 **Fix All** 全部修复
-5. 阈值和开关都在配置资产中调整：`Tools > TechArt Tools > Create Audit Config`
-   （首次打开审计窗口会自动在 `Assets/TechArtTools/` 下生成）
+Copy this repository into your project's `Packages/` folder (e.g. `Packages/unity-techart-tools/`).
 
 ---
 
-## Configuration 配置
+## Usage
 
-配置资产 `TechArtAuditConfig` 是 `ScriptableObject`，包含以下分组：
+1. Open `Tools > TechArt Tools > Audit Window`
+2. Choose an audit scope: `Selection` (assets selected in the Project window) / `Assets` (whole project) / `OpenScenes` (currently open scenes)
+3. Click **Audit**
+4. Review the issues, then click **Fix** for a single issue or **Fix All** to apply everything
+5. Tune thresholds and toggles in the config asset: `Tools > TechArt Tools > Create Audit Config`
+   (a default config is auto-created under `Assets/TechArtTools/` the first time you open the Audit window)
 
-- **Texture**：`MaxTextureSize`（默认 2048）、移动端压缩平台与格式（默认 Android / ASTC 6x6）、各检查项开关
-- **Mesh**：Read/Write 检查、高顶点数 / 高三角形数阈值
-- **Material**：关键字数量上限（默认 24）、失效关键字检查、未赋值贴图检查
-- **Scene**：Missing Script、Realtime 灯光阈值、Renderer 数量阈值
-- **General**：是否显示 Info 级别提示
+---
+
+## Configuration
+
+The `TechArtAuditConfig` settings asset (a `ScriptableObject`) is grouped as follows:
+
+- **Texture**: `MaxTextureSize` (default 2048), mobile platform & compression format (default Android / ASTC 6x6), per-check toggles
+- **Mesh**: Read/Write check, high vertex / triangle thresholds
+- **Material**: keyword limit (default 24), stale keyword check, missing texture check
+- **Scene**: missing scripts, realtime light threshold, renderer count threshold
+- **General**: whether to show Info-level findings
 
 ---
 
 ## CI / Tests
 
-仓库内置 GitHub Actions：
-- **validate-package**：校验 `package.json` 与 asmdef 合法性（无需任何密钥，任何 fork 都会跑）
-- **Unity EditMode tests**：在 Unity 2021.3 中运行 EditMode 冒烟测试。
+The repository ships GitHub Actions:
 
-> Unity 测试需要配置仓库 Secrets：`UNITY_EMAIL`、`UNITY_PASSWORD`、`UNITY_LICENSE`（可参考 [game-ci/unity-test-runner](https://github.com/game-ci/unity-test-runner)）。
-> 未配置密钥时，该 Job 会自动跳过，不影响其他检查。
+- **validate-package** — validates `package.json` and asmdef files (no secrets needed, runs on every fork)
+- **Unity EditMode tests** — runs EditMode smoke tests on Unity 2021.3
+
+> Unity tests require repo secrets: `UNITY_EMAIL`, `UNITY_PASSWORD`, `UNITY_LICENSE` (see [game-ci/unity-test-runner](https://github.com/game-ci/unity-test-runner)).
+> If the secrets are not configured, that job is skipped automatically and does not affect other checks.
 
 ---
 
 ## Roadmap
 
-- [ ] OpenUPM 发布与徽章
-- [ ] 更多修复规则（贴图压缩质量、图集打包建议等）
-- [ ] 场景资产引用 / 无引用资源清理（Dependencies 分析）
-- [ ] 一键导出审计报告（JSON / Markdown）
+- [ ] OpenUPM publication & badges
+- [ ] More fix rules (texture compression quality, atlas packing suggestions, etc.)
+- [ ] Dependency analysis / unused-asset cleanup
+- [ ] One-click audit report export (JSON / Markdown)
 
-欢迎提交 Issue / PR 完善规则与文档。
+Issues and PRs are welcome.
 
 ---
 
 ## License
 
 [MIT](LICENSE) © 2026 hhhnnnk4
-
----
-
-## English Summary
-
-**TechArt Tools** is an editor-only Unity package (UPM, no runtime cost, pipeline-agnostic) for technical artists:
-
-- **Audit Window** — scans textures / meshes / materials / open scenes for common production issues (oversized textures, read/write enabled, sRGB normal maps, missing mipmaps, uncompressed mobile textures, mesh read/write, stale shader keywords, missing scripts, too many realtime lights) with **one-click fixes** and **Fix All**.
-- **Inspector** — live statistics (memory, import settings, keyword health) for the selected mesh / texture / material.
-- **Batch tools** — bulk texture / mesh / material import fixes with progress and cancel.
-
-**Install:** `Window > Package Manager > + > Add package from git URL` then paste `https://github.com/hhhnnnk4-sudo/unity-techart-tools.git`. Requires Unity 2021.3 LTS or newer.
