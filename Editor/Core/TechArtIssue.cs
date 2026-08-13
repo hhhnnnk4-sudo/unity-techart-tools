@@ -6,7 +6,7 @@ namespace Hhnnnk4.TechArtTools.Editor
 {
     public enum TechArtIssueSeverity { Info, Warning, Error }
 
-    public enum TechArtIssueCategory { Texture, Mesh, Material, Scene, General }
+    public enum TechArtIssueCategory { Texture, Mesh, Material, Scene, Prefab, General }
 
     /// <summary>
     /// A single finding produced by an audit. Carries an optional one-click fix.

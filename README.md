@@ -28,6 +28,7 @@ Audits your selection, your whole project, or the currently open scenes and repo
 | **Mesh** | Read/Write enabled (CPU-resident copy), high vertex / triangle count alerts |
 | **Material** | Missing shader, too many keywords (variant bloat), **stale shader keywords**, unassigned texture properties, **Hidden/ shaders assigned** |
 | **Scene** | Missing scripts, too many realtime lights, high renderer counts |
+| **Prefab** | Missing scripts inside prefabs |
 
 Every issue can be fixed with a **one-click Fix**, or batch-applied with **Fix All**. Reports can be **exported as Markdown or JSON** (button in the toolbar) for sharing or archiving in your pipeline.
 
@@ -40,7 +41,16 @@ A statistics panel that follows the Project window selection, showing for meshes
 - Texture import settings (size, mipmaps, Read/Write, sRGB, compression)
 - Material keyword count and **stale keyword warnings**
 
-### 3. Duplicate Finder
+### 3. Shader Usage
+`Tools > TechArt Tools > Shader Usage`
+
+Analyzes which shaders are used by how many materials across your selection or the whole project:
+
+- Material count per shader, sorted by usage
+- **Built-in pipeline shaders** (Standard, Legacy, Sprites, UI, Particles, FX, Skybox, Nature) are flagged as URP/HDRP migration candidates
+- One click selects every material on a given shader — handy before a mass migration
+
+### 4. Duplicate Finder
 `Tools > TechArt Tools > Duplicate Finder`
 
 Finds **byte-identical duplicate textures and materials** across your selection or the whole project by content hash:
@@ -51,7 +61,7 @@ Finds **byte-identical duplicate textures and materials** across your selection 
 
 A great first step when trimming project size or migrating asset sets.
 
-### 4. Batch Tools
+### 5. Batch Tools
 `Tools > TechArt Tools > Batch`
 
 | Menu item | Action |
@@ -131,6 +141,7 @@ The repository ships GitHub Actions:
 - [x] Audit report export (Markdown / JSON)
 - [x] Base & mobile compression rules
 - [x] Duplicate asset finder (textures / materials)
+- [x] Shader usage analyzer (URP/HDRP migration candidates)
 - [ ] OpenUPM publication & badges
 - [ ] More fix rules (atlas packing suggestions, etc.)
 - [ ] Dependency analysis / unused-asset cleanup

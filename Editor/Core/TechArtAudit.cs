@@ -40,6 +40,10 @@ namespace Hhnnnk4.TechArtTools.Editor
                     {
                         TechArtMeshAuditor.Audit(path, config, issues);
                     }
+                    else if (IsPrefab(path))
+                    {
+                        TechArtPrefabAuditor.Audit(path, config, issues);
+                    }
                 }
             }
             finally
@@ -67,12 +71,17 @@ namespace Hhnnnk4.TechArtTools.Editor
         private static readonly HashSet<string> AuditableExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             ".png", ".jpg", ".jpeg", ".tga", ".psd", ".tif", ".tiff", ".exr", ".hdr", ".gif", ".bmp",
-            ".mat", ".fbx", ".obj", ".dae", ".blend", ".asset"
+            ".mat", ".fbx", ".obj", ".dae", ".blend", ".asset", ".prefab"
         };
 
         private static bool IsAuditableExtension(string path)
         {
             return AuditableExtensions.Contains(Path.GetExtension(path));
+        }
+
+        private static bool IsPrefab(string path)
+        {
+            return string.Equals(Path.GetExtension(path), ".prefab", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

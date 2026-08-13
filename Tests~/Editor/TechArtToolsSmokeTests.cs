@@ -182,5 +182,33 @@ namespace Hhnnnk4.TechArtTools.Tests
                 Directory.Delete(dir, true);
             }
         }
+
+        [Test]
+        public void BuiltInShaderClassifierIsCorrect()
+        {
+            Assert.IsTrue(TechArtShaderUsageAnalyzer.IsBuiltInShader("Standard"));
+            Assert.IsTrue(TechArtShaderUsageAnalyzer.IsBuiltInShader("Legacy Shaders/Diffuse"));
+            Assert.IsTrue(TechArtShaderUsageAnalyzer.IsBuiltInShader("Sprites/Default"));
+            Assert.IsTrue(TechArtShaderUsageAnalyzer.IsBuiltInShader("UI/Default"));
+            Assert.IsFalse(TechArtShaderUsageAnalyzer.IsBuiltInShader("Universal Render Pipeline/Lit"));
+            Assert.IsFalse(TechArtShaderUsageAnalyzer.IsBuiltInShader("HDRP/Lit"));
+            Assert.IsFalse(TechArtShaderUsageAnalyzer.IsBuiltInShader("Shader Graphs/MyGraph"));
+            Assert.IsFalse(TechArtShaderUsageAnalyzer.IsBuiltInShader("Hidden/InternalErrorShader"));
+        }
+
+        [Test]
+        public void PrefabMissingScriptCountIsZeroOnCleanObject()
+        {
+            var go = new GameObject("Clean");
+            try
+            {
+                go.AddComponent<Transform>();
+                Assert.AreEqual(0, TechArtPrefabAuditor.CountMissingScripts(go));
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(go);
+            }
+        }
     }
 }

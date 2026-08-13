@@ -89,6 +89,23 @@ Packages/com.hhhnnnk4.techarttools/
 > 说明：哈希基于源文件字节，因此只有"同一文件的拷贝"会被识别为重复；
 > 内容相似但重新导出/压缩过的文件不会被误判。
 
+## Shader Usage 着色器使用分析
+
+`Tools > TechArt Tools > Shader Usage`
+
+统计每种 shader 被多少材质使用，并按使用量排序：
+
+- **内置管线 shader**（Standard、Legacy Shaders/、Sprites/、UI/、Particles/、FX/、Skybox/、Nature/ 等）会被标记为 **built-in**，提示适合作为 URP/HDRP 迁移候选
+- 点击 **Select** 可一键选中该 shader 对应的全部材质（方便批量迁移）
+
+## Prefab 审计
+
+在资源审计（Selection / Assets 范围）中，`.prefab` 也会被扫描：
+
+- **缺失脚本（Missing Script）**：Prefab 内任一子物体存在丢失的脚本组件时报告 `Prefab` 类别 Warning
+- 通过 `PrefabUtility.LoadPrefabContents` 在内存中检查，不会修改任何资源
+- 由配置项 `CheckPrefabMissingScripts`（默认开启）控制
+
 ### Scene（场景）
 
 | 规则 | 严重级别 | 修复动作 |

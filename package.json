@@ -1,6 +1,6 @@
 {
   "name": "com.hhhnnnk4.techarttools",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "displayName": "TechArt Tools",
   "description": "A collection of technical-art oriented editor tools for Unity: asset audit (texture / mesh / material / scene), one-click fixes, batch utilities and a selection inspector. URP friendly, zero runtime dependencies.",
   "unity": "2021.3",

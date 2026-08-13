@@ -358,6 +358,7 @@ namespace Hhnnnk4.TechArtTools.Editor
                     case ".dae":
                     case ".blend":
                     case ".asset":
+                    case ".prefab":
                         auditable.Add(path);
                         break;
                 }

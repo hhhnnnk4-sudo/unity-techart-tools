@@ -55,5 +55,9 @@ namespace Hhnnnk4.TechArtTools.Editor
         public int WarnRealtimeLights = 8;
         [Tooltip("Root objects with more renderers than this are reported (Info).")]
         public int WarnRendererCount = 4000;
+
+        [Header("Prefab")]
+        [Tooltip("Scan prefabs for missing script components during asset audits.")]
+        public bool CheckPrefabMissingScripts = true;
     }
 }
