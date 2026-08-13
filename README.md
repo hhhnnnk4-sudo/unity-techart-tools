@@ -89,11 +89,14 @@ All batch operations show a progress bar and can be cancelled at any time.
 https://github.com/hhhnnnk4-sudo/unity-techart-tools.git
 ```
 
-### Option 2 — OpenUPM (pending publication)
+### Option 2 — OpenUPM
 
 ```bash
 openupm add com.hhhnnnk4.techarttools
 ```
+
+> Submission to the OpenUPM registry is in progress ([PR #6795](https://github.com/openupm/openupm/pull/6795)).
+> Once merged and built, tagged releases publish automatically via the [OpenUPM GitHub Action](https://github.com/openupm/openupm-action).
 
 ### Option 3 — Manual
 
