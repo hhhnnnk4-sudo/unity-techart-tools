@@ -136,10 +136,50 @@ namespace Hhnnnk4.TechArtTools.Tests
             try
             {
                 Assert.IsTrue(config.CheckBaseCompression);
+                Assert.IsTrue(config.WarnOnHiddenShaders);
             }
             finally
             {
                 UnityEngine.Object.DestroyImmediate(config);
+            }
+        }
+
+        [Test]
+        public void Md5HashIsStableAndCorrect()
+        {
+            // MD5("abc") = 900150983cd24fb0d6963f7d28e17f72
+            var hash = TechArtDuplicateFinder.ComputeMd5(System.Text.Encoding.UTF8.GetBytes("abc"));
+            Assert.AreEqual("900150983cd24fb0d6963f7d28e17f72", hash);
+        }
+
+        [Test]
+        public void FindDuplicatesGroupsIdenticalFiles()
+        {
+            var dir = Path.Combine(Path.GetTempPath(), "techart_dup_test_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(dir);
+            try
+            {
+                var a = Path.Combine(dir, "a.png");
+                var b = Path.Combine(dir, "b.png");
+                var c = Path.Combine(dir, "c.png");
+                var bytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+                File.WriteAllBytes(a, bytes);
+                File.WriteAllBytes(b, bytes);
+                File.WriteAllBytes(c, new byte[] { 9, 9, 9 });
+
+                var groups = TechArtDuplicateFinder.FindDuplicates(
+                    new[] { a, b, c },
+                    includeTextures: true,
+                    includeMaterials: false);
+
+                Assert.AreEqual(1, groups.Count);
+                Assert.AreEqual(2, groups[0].Paths.Count);
+                Assert.AreEqual(TechArtDuplicateType.Texture, groups[0].Type);
+                Assert.AreEqual(bytes.Length, groups[0].WastedBytes);
+            }
+            finally
+            {
+                Directory.Delete(dir, true);
             }
         }
     }

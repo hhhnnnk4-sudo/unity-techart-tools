@@ -26,7 +26,7 @@ Audits your selection, your whole project, or the currently open scenes and repo
 | --- | --- |
 | **Texture** | Oversized textures, Read/Write enabled, sRGB normal maps, missing mipmaps, uncompressed base/mobile formats, non-power-of-two |
 | **Mesh** | Read/Write enabled (CPU-resident copy), high vertex / triangle count alerts |
-| **Material** | Missing shader, too many keywords (variant bloat), **stale shader keywords**, unassigned texture properties |
+| **Material** | Missing shader, too many keywords (variant bloat), **stale shader keywords**, unassigned texture properties, **Hidden/ shaders assigned** |
 | **Scene** | Missing scripts, too many realtime lights, high renderer counts |
 
 Every issue can be fixed with a **one-click Fix**, or batch-applied with **Fix All**. Reports can be **exported as Markdown or JSON** (button in the toolbar) for sharing or archiving in your pipeline.
@@ -40,7 +40,18 @@ A statistics panel that follows the Project window selection, showing for meshes
 - Texture import settings (size, mipmaps, Read/Write, sRGB, compression)
 - Material keyword count and **stale keyword warnings**
 
-### 3. Batch Tools
+### 3. Duplicate Finder
+`Tools > TechArt Tools > Duplicate Finder`
+
+Finds **byte-identical duplicate textures and materials** across your selection or the whole project by content hash:
+
+- Groups duplicates with wasted size per group (and total)
+- Ping any asset with one click
+- **Delete duplicates** per group or all at once (keeps the first, moves the rest to the OS trash)
+
+A great first step when trimming project size or migrating asset sets.
+
+### 4. Batch Tools
 `Tools > TechArt Tools > Batch`
 
 | Menu item | Action |
@@ -119,6 +130,7 @@ The repository ships GitHub Actions:
 
 - [x] Audit report export (Markdown / JSON)
 - [x] Base & mobile compression rules
+- [x] Duplicate asset finder (textures / materials)
 - [ ] OpenUPM publication & badges
 - [ ] More fix rules (atlas packing suggestions, etc.)
 - [ ] Dependency analysis / unused-asset cleanup

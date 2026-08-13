@@ -45,6 +45,8 @@ namespace Hhnnnk4.TechArtTools.Editor
         public int MaxShaderKeywords = 24;
         public bool CheckStaleKeywords = true;
         public bool WarnOnMissingTextures = true;
+        [Tooltip("Warn when a material uses a Hidden/ shader, which is not meant to be assigned directly.")]
+        public bool WarnOnHiddenShaders = true;
 
         [Header("Scene")]
         public bool CheckMissingScripts = true;

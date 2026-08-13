@@ -28,6 +28,16 @@ namespace Hhnnnk4.TechArtTools.Editor
 
             var shader = mat.shader;
 
+            if (config.WarnOnHiddenShaders && shader.name.StartsWith("Hidden/", StringComparison.Ordinal))
+            {
+                issues.Add(new TechArtIssue(
+                    TechArtIssueCategory.Material,
+                    TechArtIssueSeverity.Warning,
+                    "Hidden shader assigned",
+                    $"'{name}' uses hidden shader '{shader.name}'. Hidden shaders are not meant to be assigned directly.",
+                    mat));
+            }
+
             if (config.CheckShaderKeywords && mat.shaderKeywords != null && mat.shaderKeywords.Length > config.MaxShaderKeywords)
             {
                 issues.Add(new TechArtIssue(

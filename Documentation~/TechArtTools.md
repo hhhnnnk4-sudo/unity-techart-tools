@@ -69,9 +69,25 @@ Packages/com.hhhnnnk4.techarttools/
 | 规则 | 严重级别 | 修复动作 |
 | --- | --- | --- |
 | Shader 缺失 | Error | 无 |
+| 使用 Hidden/ shader | Warning | 无（提示改用公开 shader） |
 | 启用关键字数 > MaxShaderKeywords | Warning | 无（提示手动处理） |
 | 存在 Shader 中不存在的关键字 | Warning | 移除失效关键字 |
 | 贴图属性（Map/Tex/Normal/Bump）未赋值 | Info | 无 |
+
+## Duplicate Finder 重复资源查找
+
+`Tools > TechArt Tools > Duplicate Finder`
+
+按**内容 MD5 哈希**找出字节级完全相同的重复资源（纹理 / 材质）：
+
+- 范围：Selection（Project 窗口选中）或 Assets（整个项目）
+- 按浪费空间从大到小排序展示，显示每组的哈希值
+- 点击路径可 Ping 对应资源
+- **Delete**：删组内重复（保留第一个），**Delete All Duplicates**：批量清理
+  - 删除前有确认弹窗，被删资源进入 OS 回收站（可通过 AssetDatabase 恢复）
+
+> 说明：哈希基于源文件字节，因此只有"同一文件的拷贝"会被识别为重复；
+> 内容相似但重新导出/压缩过的文件不会被误判。
 
 ### Scene（场景）
 
