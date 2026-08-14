@@ -106,6 +106,18 @@ Packages/com.hhhnnnk4.techarttools/
 - 通过 `PrefabUtility.LoadPrefabContents` 在内存中检查，不会修改任何资源
 - 由配置项 `CheckPrefabMissingScripts`（默认开启）控制
 
+## Find References 引用查找
+
+`Tools > TechArt Tools > Find References`（或在 Project 窗口右键资源 → `TechArt Tools > Find References`）
+
+查找选中资源被哪些文件引用（按 GUID 匹配序列化文件）：
+
+- 扫描范围：`Assets/` 与 `Packages/` 下的 `.unity`、`.prefab`、`.mat`、`.asset`、`.controller`、`.spriteatlas` 等文本序列化文件
+- 支持**进度条与取消**；结果中 `.unity` 可直接打开场景
+- 删除 / 移动 / 重命名资源前用它确认影响范围
+
+> 原理：Unity 文本序列化用 `guid: xxx` 记录引用，直接按行文本匹配 GUID，无需构建依赖图，速度极快。
+
 ### Scene（场景）
 
 | 规则 | 严重级别 | 修复动作 |

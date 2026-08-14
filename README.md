@@ -61,7 +61,16 @@ Finds **byte-identical duplicate textures and materials** across your selection 
 
 A great first step when trimming project size or migrating asset sets.
 
-### 5. Batch Tools
+### 5. Find References
+`Tools > TechArt Tools > Find References` (or right-click any asset → `TechArt Tools > Find References`)
+
+Finds every scene / prefab / material / asset file that references the selected asset, matched by **GUID**:
+
+- Fast text-based scan across the whole project, with progress bar and cancel
+- Click a result to ping it, or **Open** a scene directly
+- Essential before deleting, moving or renaming an asset ("who uses this texture?")
+
+### 6. Batch Tools
 `Tools > TechArt Tools > Batch`
 
 | Menu item | Action |
@@ -145,9 +154,10 @@ The repository ships GitHub Actions:
 - [x] Base & mobile compression rules
 - [x] Duplicate asset finder (textures / materials)
 - [x] Shader usage analyzer (URP/HDRP migration candidates)
+- [x] Reference finder ("who uses this asset?")
 - [ ] OpenUPM publication & badges
 - [ ] More fix rules (atlas packing suggestions, etc.)
-- [ ] Dependency analysis / unused-asset cleanup
+- [ ] Unused-asset cleanup
 
 Issues and PRs are welcome. See [CONTRIBUTING](CONTRIBUTING.md).
 

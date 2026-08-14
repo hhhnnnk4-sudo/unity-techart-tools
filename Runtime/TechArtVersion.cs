@@ -6,7 +6,7 @@ namespace Hhnnnk4.TechArtTools
     public static class TechArtVersion
     {
         public const string PackageName = "com.hhhnnnk4.techarttools";
-        public const string Version = "0.5.0";
+        public const string Version = "0.6.0";
         public const string DisplayName = "TechArt Tools";
     }
 }

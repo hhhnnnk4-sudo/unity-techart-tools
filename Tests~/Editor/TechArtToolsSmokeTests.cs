@@ -210,5 +210,44 @@ namespace Hhnnnk4.TechArtTools.Tests
                 UnityEngine.Object.DestroyImmediate(go);
             }
         }
+
+        [Test]
+        public void ReferenceFinderDetectsGuidInText()
+        {
+            var path = Path.Combine(Path.GetTempPath(), "techart_ref_test_" + Guid.NewGuid().ToString("N") + ".asset");
+            const string guid = "0123456789abcdef0123456789abcdef";
+            File.WriteAllText(path, "--- !u!1\nfoo:\n  m_Texture: {fileID: 0, guid: " + guid + ", type: 3}\n");
+            try
+            {
+                Assert.IsTrue(TechArtReferenceFinder.FileContainsGuid(path, guid));
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        [Test]
+        public void ReferenceFinderIgnoresAbsentGuid()
+        {
+            var path = Path.Combine(Path.GetTempPath(), "techart_ref_test_" + Guid.NewGuid().ToString("N") + ".asset");
+            File.WriteAllText(path, "guid: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+            try
+            {
+                Assert.IsFalse(TechArtReferenceFinder.FileContainsGuid(path, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"));
+            }
+            finally
+            {
+                if (File.Exists(path)) File.Delete(path);
+            }
+        }
+
+        [Test]
+        public void ReferenceFinderReturnsEmptyForInvalidPath()
+        {
+            var results = TechArtReferenceFinder.FindReferences("Assets/nonexistent_asset_xyz.asset");
+            Assert.IsNotNull(results);
+            Assert.AreEqual(0, results.Count);
+        }
     }
 }
